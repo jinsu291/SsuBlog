@@ -17,6 +17,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "truncate question", nativeQuery = true)
+    @Query(value = "truncate post", nativeQuery = true)
     void truncate();
 }
