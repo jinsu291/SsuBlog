@@ -2,6 +2,9 @@ package com.example.SsuBlog.app.post.repository;
 
 import com.example.SsuBlog.app.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,4 +14,9 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Post findBySubjectAndContent(String subject, String content);
 
     List<Post> findBySubjectLike(String s);
+
+    @Transactional
+    @Modifying
+    @Query(value = "truncate question", nativeQuery = true)
+    void truncate();
 }

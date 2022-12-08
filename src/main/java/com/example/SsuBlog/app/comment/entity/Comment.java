@@ -21,5 +21,6 @@ public class Comment {
     private LocalDateTime createDate;
 
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Post post;
 }
