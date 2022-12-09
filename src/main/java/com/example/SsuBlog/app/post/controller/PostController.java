@@ -1,14 +1,15 @@
 package com.example.SsuBlog.app.post.controller;
 
+import com.example.SsuBlog.app.base.exception.ActorCanNotModifyException;
+import com.example.SsuBlog.app.base.exception.ActorCanNotRemoveException;
 import com.example.SsuBlog.app.base.rq.Rq;
 import com.example.SsuBlog.app.member.entity.Member;
 import com.example.SsuBlog.app.post.entity.Post;
-import com.example.SsuBlog.app.base.exception.ActorCanNotModifyException;
-import com.example.SsuBlog.app.base.exception.ActorCanNotRemoveException;
 import com.example.SsuBlog.app.post.form.PostForm;
 import com.example.SsuBlog.app.post.service.PostService;
 import com.example.SsuBlog.app.postTag.entity.PostTag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +24,14 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
+@Slf4j
 public class PostController {
     private final PostService postService;
     private final Rq rq;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
-    public String getWrite() {
+    public String showWrite() {
         return "post/write";
     }
 
@@ -73,7 +75,7 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
-    public String getPostDetail(@PathVariable Long id, Model model) {
+    public String detail(@PathVariable Long id, Model model) {
         Post post = postService.findForPrintById(id).get();
 
         Member actor = rq.getMember();
@@ -83,7 +85,8 @@ public class PostController {
         }
 
         model.addAttribute("post", post);
-        return "post/write";
+
+        return "post/detail";
     }
 
     @PreAuthorize("isAuthenticated()")
