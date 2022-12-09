@@ -1,5 +1,6 @@
 package com.example.SsuBlog.app.post.service;
 
+import com.example.SsuBlog.app.base.exception.DataNotFoundException;
 import com.example.SsuBlog.app.member.entity.Member;
 import com.example.SsuBlog.app.post.entity.Post;
 import com.example.SsuBlog.app.post.repository.PostRepository;
@@ -131,5 +132,10 @@ public class PostService {
 
             post.getExtra().put("postTags", postTags);
         });
+    }
+
+    public Post getPost(long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("no %d question not found,".formatted(id)));
     }
 }

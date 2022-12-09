@@ -1,5 +1,6 @@
 package com.example.SsuBlog.app.member.service;
 
+import com.example.SsuBlog.app.base.exception.DataNotFoundException;
 import com.example.SsuBlog.app.member.entity.Member;
 import com.example.SsuBlog.app.member.exception.AlreadyJoinException;
 import com.example.SsuBlog.app.member.repository.MemberRepository;
@@ -36,5 +37,9 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
+    }
+
+    public Member getMember(String username) {
+        return this.memberRepository.findByUsername(username).orElseThrow(() -> new DataNotFoundException("username not found"));
     }
 }
