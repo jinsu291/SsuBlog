@@ -66,35 +66,6 @@
 
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text">번호</span>
-                    </label>
-
-                    <div class="badge" th:text="${post.id}"></div>
-                </div>
-
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">날짜</span>
-                    </label>
-                    <div class="flex flex-wrap gap-2">
-
-                        <div class="badge">
-                            <i class="fa-solid fa-pen"></i>
-                            <span class="ml-1">작성</span>
-                            <span class="ml-1"
-                                  th:text="${#temporals.format(post.createDate, 'yy-MM-dd HH:mm')}"></span>
-                        </div>
-                        <div class="badge badge-outline">
-                            <i class="fa-solid fa-eraser"></i>
-                            <span class="ml-1">수정</span>
-                            <span class="ml-1"
-                                  th:text="${#temporals.format(post.modifyDate, 'yy-MM-dd HH:mm')}"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-control">
-                    <label class="label">
                         <span class="label-text">제목</span>
                     </label>
                     <input autofocus type="text" name="subject" placeholder="제목" class="input input-bordered"
