@@ -1,6 +1,8 @@
 package com.example.SsuBlog.app.postkeyword.repository;
 
+import com.example.SsuBlog.app.postTag.entity.QPostTag;
 import com.example.SsuBlog.app.postkeyword.entity.PostKeyword;
+import com.example.SsuBlog.app.postkeyword.entity.QPostKeyword;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -8,11 +10,12 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.SsuBlog.app.postkeyword.entity.QPostKeyword.postKeyword;
 import static com.example.SsuBlog.app.postTag.entity.QPostTag.postTag;
+import static com.example.SsuBlog.app.postkeyword.entity.QPostKeyword.postKeyword;
 
 @RequiredArgsConstructor
 public class PostKeywordRepositoryImpl implements PostKeywordRepositoryCustom {
+
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
@@ -39,3 +42,4 @@ public class PostKeywordRepositoryImpl implements PostKeywordRepositoryCustom {
                 .collect(Collectors.toList());
     }
 }
+

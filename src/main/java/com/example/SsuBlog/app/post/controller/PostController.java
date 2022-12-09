@@ -3,10 +3,11 @@ package com.example.SsuBlog.app.post.controller;
 import com.example.SsuBlog.app.base.rq.Rq;
 import com.example.SsuBlog.app.member.entity.Member;
 import com.example.SsuBlog.app.post.entity.Post;
-import com.example.SsuBlog.app.post.exception.ActorCanNotModifyException;
-import com.example.SsuBlog.app.post.exception.ActorCanNotRemoveException;
+import com.example.SsuBlog.app.base.exception.ActorCanNotModifyException;
+import com.example.SsuBlog.app.base.exception.ActorCanNotRemoveException;
 import com.example.SsuBlog.app.post.form.PostForm;
 import com.example.SsuBlog.app.post.service.PostService;
+import com.example.SsuBlog.app.postTag.entity.PostTag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class PostController {
     @PostMapping("/write")
     public String write(@Valid PostForm postForm) {
         Member author = rq.getMember();
-        Post post = postService.write(author, postForm.getSubject(), postForm.getContent(), postForm.getContentHtml());
+        Post post = postService.write(author, postForm.getSubject(), postForm.getContent(), postForm.getContentHtml(), postForm.getPostTagContents());
         return Rq.redirectWithMsg("/post/" + post.getId(), "%d번 글이 생성되었습니다.".formatted(post.getId()));
     }
 
@@ -65,7 +67,7 @@ public class PostController {
             throw new ActorCanNotModifyException();
         }
 
-        postService.modify(post, postForm.getSubject(), postForm.getContent(), postForm.getContentHtml());
+        postService.modify(post, postForm.getSubject(), postForm.getContent(), postForm.getContentHtml(), postForm.getPostTagContents());
         return Rq.redirectWithMsg("/post/" + post.getId(), "%d번 글이 수정되었습니다.".formatted(post.getId()));
     }
 
@@ -82,6 +84,25 @@ public class PostController {
 
         model.addAttribute("post", post);
         return "post/write";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/list")
+    public String list(Model model) {
+        List<Post> posts = postService.findAllForPrintByAuthorIdOrderByIdDesc(rq.getId());
+
+        model.addAttribute("posts", posts);
+
+        return "post/list";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/tag/{tagContent}")
+    public String tagList(Model model, @PathVariable String tagContent) {
+        List<PostTag> postTags = postService.getPostTags(rq.getMember(), tagContent);
+
+        model.addAttribute("postTags", postTags);
+        return "post/tagList";
     }
 
     @PreAuthorize("isAuthenticated()")

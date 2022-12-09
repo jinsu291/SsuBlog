@@ -4,18 +4,22 @@ import com.example.SsuBlog.app.member.entity.Member;
 import com.example.SsuBlog.app.post.entity.Post;
 import com.example.SsuBlog.app.postTag.entity.PostTag;
 import com.example.SsuBlog.app.postTag.repository.PostTagRepository;
+import com.example.SsuBlog.app.postkeyword.entity.PostKeyword;
+import com.example.SsuBlog.app.postkeyword.service.PostKeywordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PostTagService {
     private final PostTagRepository postTagRepository;
+    private PostKeywordService postKeywordService;
 
     public void applyPostTags(Post post, String postTagContents) {
         List<PostTag> oldPostTags = getPostTags(post);
@@ -27,7 +31,39 @@ public class PostTagService {
 
         List<PostTag> needToDelete = new ArrayList<>();
 
+        for (PostTag oldPostTag : oldPostTags) {
+            boolean contains = postKeywordContents.stream().anyMatch(s -> s.equals(oldPostTag.getPostKeyword().getContent()));
+
+            if (contains == false) {
+                needToDelete.add(oldPostTag);
+            }
+        }
+
         needToDelete.forEach(postTag -> postTagRepository.delete(postTag));
+
+        postKeywordContents.forEach(postKeywordContent -> {
+            savePostTag(post, postKeywordContent);
+        });
+    }
+
+    private PostTag savePostTag(Post post, String postKeywordContent) {
+        PostKeyword postKeyword = postKeywordService.save(postKeywordContent);
+
+        Optional<PostTag> opPostTag = postTagRepository.findByPostIdAndPostKeywordId(post.getId(), postKeyword.getId());
+
+        if (opPostTag.isPresent()) {
+            return opPostTag.get();
+        }
+
+        PostTag postTag = PostTag.builder()
+                .post(post)
+                .member(post.getAuthor())
+                .postKeyword(postKeyword)
+                .build();
+
+        postTagRepository.save(postTag);
+
+        return postTag;
     }
 
     public List<PostTag> getPostTags(Post post) {
