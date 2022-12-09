@@ -1,5 +1,6 @@
 package com.example.SsuBlog.app.member.controller;
 
+import com.example.SsuBlog.app.base.rq.Rq;
 import com.example.SsuBlog.app.member.form.JoinForm;
 import com.example.SsuBlog.app.member.service.MemberService;
 import com.example.SsuBlog.util.Ut;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
+    private final Rq rq;
 
     @PreAuthorize("isAnonymous()")
     @GetMapping("/login")

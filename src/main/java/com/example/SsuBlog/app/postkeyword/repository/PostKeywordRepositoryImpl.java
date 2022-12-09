@@ -15,7 +15,6 @@ import static com.example.SsuBlog.app.postkeyword.entity.QPostKeyword.postKeywor
 
 @RequiredArgsConstructor
 public class PostKeywordRepositoryImpl implements PostKeywordRepositoryCustom {
-
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override

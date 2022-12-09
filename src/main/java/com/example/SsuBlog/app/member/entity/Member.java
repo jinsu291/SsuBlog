@@ -31,4 +31,8 @@ public class Member extends BaseEntity {
     public Member(long id) {
         super(id);
     }
+
+    public String getJdenticon() {
+        return "member__" + getId();
+    }
 }

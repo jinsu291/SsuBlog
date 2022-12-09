@@ -4,6 +4,7 @@
 <head>
     <title>글 내용</title>
 </head>
+
 <body>
 <main layout:fragment="main">
     <section class="section section-write container mx-auto">
@@ -20,6 +21,10 @@
                 </div>
 
                 <div class="flex flex-wrap gap-3">
+                    <div class="flex">
+                        <svg width="20" height="20" th:data-jdenticon-value="${post.author.jdenticon}"></svg>
+                        <div th:text="${post.author.name}"></div>
+                    </div>
 
                     <div class="flex flex-wrap gap-3">
                         <div>
@@ -66,6 +71,10 @@
                         <i class="fa-solid fa-angle-left"></i>
                         <span class="ml-1">이전</span>
                     </button>
+                </div>
+
+                <div class="flex justify-center">
+                    <svg width="200" height="200" th:data-jdenticon-value="${post.jdenticon}"></svg>
                 </div>
 
                 <div class="toast-ui-viewer">
