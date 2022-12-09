@@ -29,13 +29,13 @@ public class PostController {
     private final PostService postService;
     private final Rq rq;
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/write")
     public String showWrite() {
         return "post/write";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/write")
     public String write(@Valid PostForm postForm) {
         Member author = rq.getMember();
@@ -43,7 +43,7 @@ public class PostController {
         return Rq.redirectWithMsg("/post/" + post.getId(), "%d번 글이 생성되었습니다.".formatted(post.getId()));
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}/modify")
     public String showModify(@PathVariable long id, Model model) {
         Post post = postService.findForPrintById(id).get();
@@ -59,7 +59,7 @@ public class PostController {
         return "post/modify";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{id}/modify")
     public String modify(@Valid PostForm postForm, @PathVariable long id) {
         Post post = postService.findById(id).get();
@@ -108,7 +108,7 @@ public class PostController {
         return "post/tagList";
     }
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{id}/remove")
     public String remove(@PathVariable long id) {
         Post post = postService.findById(id).get();

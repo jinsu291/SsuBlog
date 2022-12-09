@@ -5,9 +5,7 @@
 <th:block th:fragment="postListItem">
     <div class="card bg-base-100 shadow-xl">
         <a th:href="@{|/post/${post.id}|}" class="block">
-            <figure>
-                <svg width="200" height="200" th:data-jdenticon-value="${post.jdenticon}"></svg>
-            </figure>
+
         </a>
         <div class="card-body">
             <h2 class="card-title flex flex-wrap">
@@ -17,7 +15,7 @@
                 </a>
                 <div class="flex">
                     <svg width="20" height="20" th:data-jdenticon-value="${post.author.jdenticon}"></svg>
-                    <div th:text="${post.author.name}"></div>
+
                 </div>
             </h2>
             <div th:utext="${post.extra_postTagLinks}"></div>
