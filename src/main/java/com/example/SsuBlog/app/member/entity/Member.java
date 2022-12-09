@@ -21,6 +21,7 @@ public class Member extends BaseEntity {
     @JsonIgnore
     private String password;
     private String email;
+    private String nickname;
     private boolean emailVerified;
 
     public String getName() {

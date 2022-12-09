@@ -1,18 +1,23 @@
 package com.example.SsuBlog.app.post.entity;
 
 import com.example.SsuBlog.app.member.entity.Member;
-import lombok.Getter;
-import lombok.Setter;
+import com.example.SsuBlog.app.base.entity.BaseEntity;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PROTECTED;
 
+@Entity
 @Getter
 @Setter
-@Entity
-public class Post {
+@SuperBuilder
+@ToString(callSuper = true)
+@NoArgsConstructor(access = PROTECTED)
+public class Post extends BaseEntity {
     @ManyToOne(fetch = LAZY)
     private Member author;
 

@@ -16,6 +16,7 @@ public class MemberContext extends User {
     private final LocalDateTime modifyDate;
     private final String username;
     private final String email;
+    private String nickname;
 
     public MemberContext(Member member, List<GrantedAuthority> authorities) {
         super(member.getUsername(), member.getPassword(), authorities);
@@ -24,6 +25,7 @@ public class MemberContext extends User {
         this.modifyDate = member.getModifyDate();
         this.username = member.getUsername();
         this.email = member.getEmail();
+        this.nickname = member.getNickname();
     }
 
     public Member getMember() {
@@ -39,5 +41,10 @@ public class MemberContext extends User {
 
     public String getName() {
         return getUsername();
+    }
+
+    public boolean hasAuthority(String authorityName) {
+        return getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authorityName));
     }
 }
