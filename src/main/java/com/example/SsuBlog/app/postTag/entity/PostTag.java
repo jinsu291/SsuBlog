@@ -2,6 +2,7 @@ package com.example.SsuBlog.app.postTag.entity;
 
 import com.example.SsuBlog.app.member.entity.Member;
 import com.example.SsuBlog.app.post.entity.Post;
+import com.example.SsuBlog.app.postkeyword.entity.PostKeyword;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
@@ -27,4 +28,8 @@ public class PostTag extends BaseEntity {
     @ManyToOne
     @ToString.Exclude
     private Member member;
+
+    @ManyToOne
+    @ToString.Exclude
+    private PostKeyword postKeyword;
 }
