@@ -30,4 +30,14 @@ public class CommentService {
     public Comment getComment(Long id) {
         return commentRepository.findById(id).orElseThrow(() -> new DataNotFoundException("comment not found"));
     }
+
+    public void modify(Comment comment, String content) {
+        comment.setContent(content);
+        comment.setModifyDate(LocalDateTime.now());
+        commentRepository.save(comment);
+    }
+
+    public void delete(Comment comment) {
+        commentRepository.delete(comment);
+    }
 }
