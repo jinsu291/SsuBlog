@@ -1,26 +1,25 @@
 package com.example.SsuBlog.app.comment.entity;
 
+import com.example.SsuBlog.app.base.entity.BaseEntity;
 import com.example.SsuBlog.app.member.entity.Member;
 import com.example.SsuBlog.app.post.entity.Post;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static lombok.AccessLevel.PROTECTED;
+
+@Entity
 @Getter
 @Setter
-@Entity
-public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Comment extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
-
-    private LocalDateTime createDate;
-    private LocalDateTime modifyDate;
 
     @ManyToOne
     private Post post;

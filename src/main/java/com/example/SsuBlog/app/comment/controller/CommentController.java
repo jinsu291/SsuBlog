@@ -46,7 +46,7 @@ public class CommentController {
         Comment comment = commentService.create(post, commentForm.getContent(), author);
         // 답변 등록 끝
 
-        return "redirect:/post/detail/%d#comment%d".formatted(id, comment.getId());
+        return "redirect:/post/detail/%d#comment_%d".formatted(id, comment.getId());
 
     }
     @PreAuthorize("isAuthenticated()")

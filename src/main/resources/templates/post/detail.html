@@ -69,7 +69,7 @@
 
     <!-- 답변 반복 시작 -->
     <div class="card my-3" th:each="comment : ${post.commentList}">
-        <a style="scroll-margin-top:10px;" th:id="|comment{comment.id}|"></a>
+        <a style="scroll-margin-top:10px;" th:id="|comment/${comment.id}|"></a>
         <div class="card-body">
             <div class="card-text" th:utext="${@commonUtil.markdown(comment.content)}"></div>
 
@@ -109,10 +109,10 @@
 
         <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control"
                   rows="10"></textarea>
-<!--        <textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>-->
+        <textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>
 
         <input sec:authorize="isAnonymous()" disabled type="submit" value="답변등록" class="btn btn-primary my-2">
-<!--        <input sec:authorize="isAuthenticated()" type="submit" value="답변등록" class="btn btn-primary my-2">-->
+        <input sec:authorize="isAuthenticated()" type="submit" value="답변등록" class="btn btn-primary my-2">
     </form>
 
 

@@ -18,7 +18,6 @@ public class CommentService {
     public Comment create(Post post, String content, Member author) {
         Comment comment = new Comment();
         comment.setContent(content);
-        comment.setCreateDate(LocalDateTime.now());
         comment.setAuthor(author);
         post.addComment(comment);
 
@@ -33,7 +32,6 @@ public class CommentService {
 
     public void modify(Comment comment, String content) {
         comment.setContent(content);
-        comment.setModifyDate(LocalDateTime.now());
         commentRepository.save(comment);
     }
 
