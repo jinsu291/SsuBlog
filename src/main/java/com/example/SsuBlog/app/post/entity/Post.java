@@ -1,6 +1,5 @@
 package com.example.SsuBlog.app.post.entity;
 
-import com.example.SsuBlog.app.comment.entity.Comment;
 import com.example.SsuBlog.app.member.entity.Member;
 import com.example.SsuBlog.app.base.entity.BaseEntity;
 import com.example.SsuBlog.app.postTag.entity.PostTag;
@@ -37,9 +36,6 @@ public class Post extends BaseEntity {
 
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
-
-    @OneToMany(mappedBy = "post", cascade = {CascadeType.ALL})
-    private List<Comment> commentList = new ArrayList<>();
 
     public String getForPrintContentHtml() {
         return contentHtml.replaceAll("toastui-editor-ww-code-block-highlighting", "");
@@ -95,11 +91,6 @@ public class Post extends BaseEntity {
 
     public String getJdenticon() {
         return "post__" + getId();
-    }
-
-    public void addComment(Comment comment) {
-        comment.setPost(this);
-        getCommentList().add(comment);
     }
 }
 

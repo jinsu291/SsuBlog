@@ -1,6 +1,5 @@
 package com.example.SsuBlog.app.base.initData;
 
-import com.example.SsuBlog.app.comment.Service.CommentService;
 import com.example.SsuBlog.app.member.service.MemberService;
 import com.example.SsuBlog.app.post.service.PostService;
 import org.springframework.boot.CommandLineRunner;
@@ -13,10 +12,9 @@ import org.springframework.context.annotation.Profile;
 public class TestInitData implements InitDataBefore {
     @Bean
     CommandLineRunner initData(MemberService memberService,
-                               PostService postService,
-                               CommentService commentService) {
+                               PostService postService) {
         return args -> {
-            before(memberService, postService, commentService);
+            before(memberService, postService);
         };
     }
 }
